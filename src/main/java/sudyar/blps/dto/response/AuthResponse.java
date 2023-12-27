@@ -10,6 +10,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthResponse implements Serializable {
-    private String jwt;
-    private String errorMessage;
+	private String jwt;
+	private String errorMessage;
 }

@@ -21,60 +21,60 @@ import sudyar.blps.security.JwtTokenProvider;
 @Service
 public class AuthService {
 
-    @Autowired
-    AuthenticationManager authenticationManager;
+	@Autowired
+	AuthenticationManager authenticationManager;
 
-    @Autowired
-    JwtTokenProvider jwtUtils;
+	@Autowired
+	JwtTokenProvider jwtUtils;
 
-    @Autowired
-    UserRepository userRepository;
+	@Autowired
+	UserRepository userRepository;
 
-    @Autowired
-    PasswordEncoder encoder;
-
-
-    public AuthResponse signIn(AuthUser user) throws BadCredentialsException {
-        Authentication authentication = authenticationManager.authenticate(
-                new JaasAuthenticationToken(user.getLogin(), user.getPassword(), null)
-        );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateToken(authentication);
-        AuthResponse response = new AuthResponse();
-        response.setJwt("Bearer " + jwt);
-
-        return response;
-    }
-
-    public ResponseEntity<AuthResponse> signUp(AuthUserWithRole newUser){
-        final var response = new AuthResponse();
-        if (userRepository.existsByLogin(newUser.getLogin())) {
-            response.setErrorMessage("This login is already taken");
-            return ResponseEntity
-                    .badRequest()
-                    .body(response);
-        }
+	@Autowired
+	PasswordEncoder encoder;
 
 
-        // Create new user's account
-        final var user = new User();
-        user.setLogin(newUser.getLogin());
-        user.setPassword(encoder.encode(newUser.getPassword()));
-        user.setRole(newUser.getRole());
-        userRepository.save(user);
+	public AuthResponse signIn(AuthUser user) throws BadCredentialsException {
+		Authentication authentication = authenticationManager.authenticate(
+				new JaasAuthenticationToken(user.getLogin(), user.getPassword(), null)
+		);
+
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		String jwt = jwtUtils.generateToken(authentication);
+		AuthResponse response = new AuthResponse();
+		response.setJwt("Bearer " + jwt);
+
+		return response;
+	}
+
+	public ResponseEntity<AuthResponse> signUp(AuthUserWithRole newUser) {
+		final var response = new AuthResponse();
+		if (userRepository.existsByLogin(newUser.getLogin())) {
+			response.setErrorMessage("This login is already taken");
+			return ResponseEntity
+					.badRequest()
+					.body(response);
+		}
 
 
-        // Sign in
-        final var authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(newUser.getLogin(), newUser.getPassword())
-        );
+		// Create new user's account
+		final var user = new User();
+		user.setLogin(newUser.getLogin());
+		user.setPassword(encoder.encode(newUser.getPassword()));
+		user.setRole(newUser.getRole());
+		userRepository.save(user);
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        final var jwt = jwtUtils.generateToken(authentication);
-        response.setJwt("Bearer " + jwt);
 
-        return ResponseEntity.ok(response);
-    }
+		// Sign in
+		final var authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(newUser.getLogin(), newUser.getPassword())
+		);
+
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		final var jwt = jwtUtils.generateToken(authentication);
+		response.setJwt("Bearer " + jwt);
+
+		return ResponseEntity.ok(response);
+	}
 
 }

@@ -8,9 +8,9 @@ import java.util.List;
 
 @Data
 public class Users {
-    private List<User> user;
+	private List<User> user;
 
-    public Users(){
-        user = new ArrayList<>();
-    }
+	public Users() {
+		user = new ArrayList<>();
+	}
 }

@@ -8,6 +8,7 @@ import java.util.List;
 public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
 
 
-    List<Feedback> findAllByLoginExecutor(String login);
-    List<Feedback> findAllByLoginEmployer(String login);
+	List<Feedback> findAllByLoginExecutor(String login);
+
+	List<Feedback> findAllByLoginEmployer(String login);
 }

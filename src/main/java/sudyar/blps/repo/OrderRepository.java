@@ -6,12 +6,12 @@ import sudyar.blps.entity.Ordering;
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Ordering, Integer> {
-    List<Ordering> findByOwnerLogin(String ownerLogin);
+	List<Ordering> findByOwnerLogin(String ownerLogin);
 
 //    void deleteByOwnerLogin(String ownerLogin);
 
 
-    @Override
-    void deleteById(Integer id);
+	@Override
+	void deleteById(Integer id);
 
 }

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthUser {
-    private String login;
-    private String password;
+	private String login;
+	private String password;
 
 }

@@ -9,18 +9,19 @@ import sudyar.blps.repo.FeedbackRepository;
 @Service
 public class FeedbackService {
 
-    @Autowired
-    FeedbackRepository feedbackRepository;
+	@Autowired
+	FeedbackRepository feedbackRepository;
 
-    public FeedbackResponse getAllForExecutor(String login){
-        return new FeedbackResponse(feedbackRepository.findAllByLoginExecutor(login));
-    }
-    public FeedbackResponse getAllForEmployer(String login){
-        return new FeedbackResponse(feedbackRepository.findAllByLoginEmployer(login));
-    }
+	public FeedbackResponse getAllForExecutor(String login) {
+		return new FeedbackResponse(feedbackRepository.findAllByLoginExecutor(login));
+	}
 
-    public void add(Feedback feedback){
-        feedbackRepository.save(feedback);
-    }
+	public FeedbackResponse getAllForEmployer(String login) {
+		return new FeedbackResponse(feedbackRepository.findAllByLoginEmployer(login));
+	}
+
+	public void add(Feedback feedback) {
+		feedbackRepository.save(feedback);
+	}
 
 }

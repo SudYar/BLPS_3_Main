@@ -16,32 +16,32 @@ import java.sql.Timestamp;
 @Data
 @Table(name = "Notice")
 public class Notice {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
 
-    @NonNull
-    @Column(name = "toUser")
-    private String toUser;
+	@NonNull
+	@Column(name = "toUser")
+	private String toUser;
 
-    @Column(name = "from_user")
-    private String fromUser;
+	@Column(name = "from_user")
+	private String fromUser;
 
-    @Column(name = "description")
-    private String description;
+	@Column(name = "description")
+	private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "target_ordering_id",referencedColumnName = "id")
-    private Ordering targetOrdering;
+	@ManyToOne
+	@JoinColumn(name = "target_ordering_id", referencedColumnName = "id")
+	private Ordering targetOrdering;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private Status status;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status")
+	private Status status;
 
-    @Column(name = "created_date")
-    @CreationTimestamp
-    private Timestamp createdDate;
+	@Column(name = "created_date")
+	@CreationTimestamp
+	private Timestamp createdDate;
 
 
 }

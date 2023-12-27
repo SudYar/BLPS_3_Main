@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class FeedbackRequest {
 
-    private int idOrder;
+	private int idOrder;
 
-    private int starsForFeedback;
+	private int starsForFeedback;
 }

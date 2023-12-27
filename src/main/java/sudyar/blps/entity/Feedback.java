@@ -14,30 +14,29 @@ import java.sql.Timestamp;
 @Data
 @Table(name = "Feedback")
 public class Feedback {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
 
-    @Column(name = "address")
-    private String address;
+	@Column(name = "address")
+	private String address;
 
-    @Column(name = "description")
-    private String description;
+	@Column(name = "description")
+	private String description;
 
-    @Column(name = "stars")
-    private Integer stars;
+	@Column(name = "stars")
+	private Integer stars;
 
-    @Column(name = "emplyer")
-    private String loginEmployer;
+	@Column(name = "emplyer")
+	private String loginEmployer;
 
-    @Column(name = "executor")
-    private String loginExecutor;
+	@Column(name = "executor")
+	private String loginExecutor;
 
-    @Column(name = "created_date")
-    @CreationTimestamp
-    private Timestamp createdDate;
-
+	@Column(name = "created_date")
+	@CreationTimestamp
+	private Timestamp createdDate;
 
 
 }

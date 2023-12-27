@@ -14,20 +14,20 @@ import java.util.Collections;
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        final User user = userRepository
-                .findByLogin(username);
-        if (user == null) throw new UsernameNotFoundException("User not found.");
-        final var roleName = user.getRole().name();
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		final User user = userRepository
+				.findByLogin(username);
+		if (user == null) throw new UsernameNotFoundException("User not found.");
+		final var roleName = user.getRole().name();
 
-        return new org.springframework.security.core.userdetails.User(
-                user.getLogin(),
-                user.getPassword(),
-                Collections.singleton(new SimpleGrantedAuthority(roleName))
-        );
-    }
+		return new org.springframework.security.core.userdetails.User(
+				user.getLogin(),
+				user.getPassword(),
+				Collections.singleton(new SimpleGrantedAuthority(roleName))
+		);
+	}
 }

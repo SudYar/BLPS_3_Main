@@ -18,16 +18,16 @@ import sudyar.blps.service.AuthService;
 @RequestMapping("auth")
 @Validated
 public class AuthController {
-    @Autowired
-    AuthService authService;
+	@Autowired
+	AuthService authService;
 
-    @PostMapping("sign-in")
-    ResponseEntity<AuthResponse> signIn(@RequestBody AuthUser user) throws BadCredentialsException {
-        return ResponseEntity.ok(authService.signIn(user));
-    }
+	@PostMapping("sign-in")
+	ResponseEntity<AuthResponse> signIn(@RequestBody AuthUser user) throws BadCredentialsException {
+		return ResponseEntity.ok(authService.signIn(user));
+	}
 
-    @PostMapping("sign-up")
-    ResponseEntity<AuthResponse> signUp(@RequestBody AuthUserWithRole newUser){
-        return authService.signUp(newUser);
-    }
+	@PostMapping("sign-up")
+	ResponseEntity<AuthResponse> signUp(@RequestBody AuthUserWithRole newUser) {
+		return authService.signUp(newUser);
+	}
 }

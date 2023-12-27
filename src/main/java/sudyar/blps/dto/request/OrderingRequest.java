@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrderingRequest {
 
-    private String address;
+	private String address;
 
-    private String description;
+	private String description;
 
-    private Integer price;
+	private Integer price;
 
-    public static String getInfo(){
-        return "Поля: String address, String description, Int price";
-    }
+	public static String getInfo() {
+		return "Поля: String address, String description, Int price";
+	}
 }

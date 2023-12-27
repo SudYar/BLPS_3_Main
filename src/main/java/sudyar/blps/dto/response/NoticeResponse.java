@@ -11,5 +11,5 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NoticeResponse {
-    private List<Notice> notices;
+	private List<Notice> notices;
 }

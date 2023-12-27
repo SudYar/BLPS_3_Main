@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ChoosenRequest {
+public class ChosenRequest {
 
-    private int idOrder;
+	private int idOrder;
 
-    private String executor;
+	private String executor;
 }

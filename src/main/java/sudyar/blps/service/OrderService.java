@@ -20,76 +20,76 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OrderService {
 
-    private final BitronixTransactionManager bitronixTransactionManager;
+	private final BitronixTransactionManager bitronixTransactionManager;
 
-    @Autowired
-    private OrderRepository orderRepository;
+	@Autowired
+	private OrderRepository orderRepository;
 
-    @Autowired
-    private NoticeRepository noticeRepository;
+	@Autowired
+	private NoticeRepository noticeRepository;
 
-    public OrdersResponse getAll(){
-        final var res = new OrdersResponse(orderRepository.findAll().stream().toList());
-        return res;
-    }
+	public OrdersResponse getAll() {
+		final var res = new OrdersResponse(orderRepository.findAll().stream().toList());
+		return res;
+	}
 
-    public OrdersResponse getAllByOwner(String loginOwner){
-        final var res = new OrdersResponse(orderRepository.findByOwnerLogin(loginOwner).stream().toList());
-        return res;
-    }
+	public OrdersResponse getAllByOwner(String loginOwner) {
+		final var res = new OrdersResponse(orderRepository.findByOwnerLogin(loginOwner).stream().toList());
+		return res;
+	}
 
-    public Optional<Ordering> getById(Integer idOrdering){
-        return orderRepository.findById(idOrdering);
-    }
+	public Optional<Ordering> getById(Integer idOrdering) {
+		return orderRepository.findById(idOrdering);
+	}
 
-    public boolean existById(int idOrdering){
-        return orderRepository.existsById(idOrdering);
-    }
+	public boolean existById(int idOrdering) {
+		return orderRepository.existsById(idOrdering);
+	}
 
-    public void createOrdering(@NonNull OrderingRequest orderingRequest, String owner){
-        final var newOrder = new Ordering();
-        newOrder.setAddress(orderingRequest.getAddress());
-        newOrder.setDescription(orderingRequest.getDescription());
-        newOrder.setPrice(orderingRequest.getPrice());
-        newOrder.setOwnerLogin(owner);
-        orderRepository.save(newOrder);
-    }
+	public void createOrdering(@NonNull OrderingRequest orderingRequest, String owner) {
+		final var newOrder = new Ordering();
+		newOrder.setAddress(orderingRequest.getAddress());
+		newOrder.setDescription(orderingRequest.getDescription());
+		newOrder.setPrice(orderingRequest.getPrice());
+		newOrder.setOwnerLogin(owner);
+		orderRepository.save(newOrder);
+	}
 
-    public void deleteOrdering(int idOrdering){
-        try {
-            bitronixTransactionManager.begin();
-            List<Notice> notices = noticeRepository.findByTargetOrdering(orderRepository.findById(idOrdering).get());
-            noticeRepository.deleteAll(notices);
-            orderRepository.deleteById(idOrdering);
-            bitronixTransactionManager.commit();
-        }catch (Exception e){
+	public void deleteOrdering(int idOrdering) {
+		try {
+			bitronixTransactionManager.begin();
+			List<Notice> notices = noticeRepository.findByTargetOrdering(orderRepository.findById(idOrdering).get());
+			noticeRepository.deleteAll(notices);
+			orderRepository.deleteById(idOrdering);
+			bitronixTransactionManager.commit();
+		} catch (Exception e) {
 
-            try {
-                bitronixTransactionManager.rollback();
-            } catch (SystemException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
+			try {
+				bitronixTransactionManager.rollback();
+			} catch (SystemException ex) {
+				throw new RuntimeException(ex);
+			}
+		}
 
-    }
+	}
 
-    public int deleteAllOrdering(String loginOwner){
-         try {
-                bitronixTransactionManager.begin();
-                final var res = orderRepository.findAll();
-                List<Notice> notices = noticeRepository.findByFromUser(loginOwner);
-                noticeRepository.deleteAll(notices);
-                orderRepository.deleteAll(res);
-                bitronixTransactionManager.commit();
-                return res.size();
-        }catch (Exception e){
-             try {
-                 bitronixTransactionManager.rollback();
-             } catch (SystemException ex) {
-                 throw new RuntimeException(ex);
-             }
-             return 0;
-        }
-    }
+	public int deleteAllOrdering(String loginOwner) {
+		try {
+			bitronixTransactionManager.begin();
+			final var res = orderRepository.findAll();
+			List<Notice> notices = noticeRepository.findByFromUser(loginOwner);
+			noticeRepository.deleteAll(notices);
+			orderRepository.deleteAll(res);
+			bitronixTransactionManager.commit();
+			return res.size();
+		} catch (Exception e) {
+			try {
+				bitronixTransactionManager.rollback();
+			} catch (SystemException ex) {
+				throw new RuntimeException(ex);
+			}
+			return 0;
+		}
+	}
 
 }

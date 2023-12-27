@@ -25,56 +25,56 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Autowired
-    private JwtAuthenticationPoint unauthorizedHandler;
+	@Autowired
+	private JwtAuthenticationPoint unauthorizedHandler;
 
-    @Bean
-    JwtAuthenticationFilter jwtAuthenticationFilter(){
-        return new JwtAuthenticationFilter();
-    }
+	@Bean
+	JwtAuthenticationFilter jwtAuthenticationFilter() {
+		return new JwtAuthenticationFilter();
+	}
 
-    @Bean
-    PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
-    }
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+		return authConfig.getAuthenticationManager();
+	}
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("localhost"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(List.of("localhost"));
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
-                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .cors()
-                .and()
-                .csrf(AbstractHttpConfigurer::disable)
-                .exceptionHandling()
-                .authenticationEntryPoint(unauthorizedHandler)  //если пользователь не зарегестрирован,то он обрабатывается тут
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/auth/**")
-                        .permitAll()
-                        .requestMatchers("/employer/**")
-                        .hasAuthority(Role.EMPLOYER.name())
-                        .requestMatchers("/executor/**")
-                        .hasAuthority(Role.EXECUTOR.name())
-                        .anyRequest()
-                        .permitAll()
-                )
-                .build();
-    }
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		return http
+				.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+				.cors()
+				.and()
+				.csrf(AbstractHttpConfigurer::disable)
+				.exceptionHandling()
+				.authenticationEntryPoint(unauthorizedHandler)  //если пользователь не зарегестрирован,то он обрабатывается тут
+				.and()
+				.sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
+				.authorizeHttpRequests((auth) -> auth
+						.requestMatchers("/auth/**")
+						.permitAll()
+						.requestMatchers("/employer/**")
+						.hasAuthority(Role.EMPLOYER.name())
+						.requestMatchers("/executor/**")
+						.hasAuthority(Role.EXECUTOR.name())
+						.anyRequest()
+						.permitAll()
+				)
+				.build();
+	}
 }

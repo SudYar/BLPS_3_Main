@@ -14,23 +14,23 @@ import sudyar.blps.etc.Note;
 @RequiredArgsConstructor
 public class JmsService {
 
-    @Autowired
-    private JmsTemplate jmsTemplate;
+	@Autowired
+	private JmsTemplate jmsTemplate;
 
-    @Autowired
-    private Queue queue;
+	@Autowired
+	private Queue queue;
 
-    public void sendNotice (Notice notice){
+	public void sendNotice(Notice notice) {
 
-        Note note = new Note(notice.getToUser(), notice.getFromUser(), notice.getDescription());
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            String noteAsJson = mapper.writeValueAsString(note);
+		Note note = new Note(notice.getToUser(), notice.getFromUser(), notice.getDescription());
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			String noteAsJson = mapper.writeValueAsString(note);
 
-            jmsTemplate.convertAndSend(queue, noteAsJson);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+			jmsTemplate.convertAndSend(queue, noteAsJson);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-    }
+	}
 }

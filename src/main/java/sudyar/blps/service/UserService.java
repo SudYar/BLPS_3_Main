@@ -8,14 +8,14 @@ import sudyar.blps.repo.UserRepository;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    public User getUserByLogin(String login) {
-        return userRepository.findByLogin(login);
-    }
+	public User getUserByLogin(String login) {
+		return userRepository.findByLogin(login);
+	}
 
-    public boolean exitsUserLogin(String login){
-        return userRepository.existsByLogin(login);
-    }
+	public boolean exitsUserLogin(String login) {
+		return userRepository.existsByLogin(login);
+	}
 }

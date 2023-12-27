@@ -9,7 +9,7 @@ import sudyar.blps.entity.Role;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthUserWithRole {
-    private String login;
-    private String password;
-    private Role role;
+	private String login;
+	private String password;
+	private Role role;
 }

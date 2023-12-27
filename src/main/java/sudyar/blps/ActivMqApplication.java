@@ -7,8 +7,8 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 public class ActivMqApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(ActivMqApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(ActivMqApplication.class, args);
+	}
 
 }

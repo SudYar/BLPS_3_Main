@@ -1,5 +1,4 @@
 package sudyar.blps.config;
-;
 
 import jakarta.jms.Queue;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -14,24 +13,24 @@ import org.springframework.jms.core.JmsTemplate;
 @EnableJms
 public class SpringActiveMQConfig {
 
-    @Value("${activemq.broker.url}")
-    private String brokerUrl;
+	@Value("${activemq.broker.url}")
+	private String brokerUrl;
 
-    @Bean
-    public Queue queue() {
-        return new ActiveMQQueue("netsurfingzone-queue");
-    }
+	@Bean
+	public Queue queue() {
+		return new ActiveMQQueue("netsurfingzone-queue");
+	}
 
-    @Bean
-    public ActiveMQConnectionFactory activeMQConnectionFactory() {
-        ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory();
-        activeMQConnectionFactory.setBrokerURL(brokerUrl);
-        return activeMQConnectionFactory;
-    }
+	@Bean
+	public ActiveMQConnectionFactory activeMQConnectionFactory() {
+		ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory();
+		activeMQConnectionFactory.setBrokerURL(brokerUrl);
+		return activeMQConnectionFactory;
+	}
 
-    @Bean
-    public JmsTemplate jmsTemplate() {
-        return new JmsTemplate(activeMQConnectionFactory());
-    }
+	@Bean
+	public JmsTemplate jmsTemplate() {
+		return new JmsTemplate(activeMQConnectionFactory());
+	}
 
 }

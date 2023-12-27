@@ -7,9 +7,9 @@ import lombok.Data;
 @AllArgsConstructor
 public class MessageRequest {
 
-    private String toUser;
+	private String toUser;
 
-    private String description;
+	private String description;
 
-    private int idTargetOrdering;
+	private int idTargetOrdering;
 }

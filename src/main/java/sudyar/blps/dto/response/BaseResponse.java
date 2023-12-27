@@ -2,19 +2,19 @@ package sudyar.blps.dto.response;
 
 public class BaseResponse {
 
-    private final String status;
-    private final Integer code;
+	private final String status;
+	private final Integer code;
 
-    public BaseResponse(String status, Integer code) {
-        this.status = status;
-        this.code = code;
-    }
+	public BaseResponse(String status, Integer code) {
+		this.status = status;
+		this.code = code;
+	}
 
-    public String getStatus() {
-        return status;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public Integer getCode() {
-        return code;
-    }
+	public Integer getCode() {
+		return code;
+	}
 }
