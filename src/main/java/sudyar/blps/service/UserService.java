@@ -1,15 +1,15 @@
 package sudyar.blps.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import sudyar.blps.entity.User;
 import sudyar.blps.repo.UserRepository;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-	@Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 
 	public User getUserByLogin(String login) {
 		return userRepository.findByLogin(login);

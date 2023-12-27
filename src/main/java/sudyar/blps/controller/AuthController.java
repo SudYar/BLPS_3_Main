@@ -1,6 +1,7 @@
 package sudyar.blps.controller;
 
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -17,9 +18,9 @@ import sudyar.blps.service.AuthService;
 @RestController
 @RequestMapping("auth")
 @Validated
+@RequiredArgsConstructor
 public class AuthController {
-	@Autowired
-	AuthService authService;
+	private final AuthService authService;
 
 	@PostMapping("sign-in")
 	ResponseEntity<AuthResponse> signIn(@RequestBody AuthUser user) throws BadCredentialsException {

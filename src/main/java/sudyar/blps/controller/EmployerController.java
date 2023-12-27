@@ -1,6 +1,7 @@
 package sudyar.blps.controller;
 
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,23 +29,17 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/employer")
+@RequiredArgsConstructor
 public class EmployerController {
 	final private Integer DIFF_TIME = 1000000;
 
 
 	Logger logger = LoggerFactory.getLogger(EmployerController.class);
 
-	@Autowired
-	private OrderService orderService;
-
-	@Autowired
-	private UserService userService;
-
-	@Autowired
-	private NoticeService noticeService;
-
-	@Autowired
-	private FeedbackService feedbackService;
+	private final OrderService orderService;
+	private final UserService userService;
+	private final NoticeService noticeService;
+	private final FeedbackService feedbackService;
 
 	@GetMapping("/infoOrder")
 	public InfoResponse getInfo() {

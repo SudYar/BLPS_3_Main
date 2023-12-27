@@ -1,20 +1,14 @@
 package sudyar.blps.dto.response;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
 public class InfoResponse {
 
 	private final String info;
 	private final Integer code;
 
-	public InfoResponse(String info, Integer code) {
-		this.info = info;
-		this.code = code;
-	}
-
-	public String getInfo() {
-		return info;
-	}
-
-	public Integer getCode() {
-		return code;
-	}
 }

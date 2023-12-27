@@ -3,7 +3,6 @@ package sudyar.blps.service;
 import bitronix.tm.BitronixTransactionManager;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sudyar.blps.dto.request.MessageRequest;
 import sudyar.blps.dto.response.NoticeResponse;
@@ -24,14 +23,9 @@ public class NoticeService {
 
 	private final BitronixTransactionManager bitronixTransactionManager;
 
-	@Autowired
-	private NoticeRepository noticeRepository;
-
-	@Autowired
-	private JmsService jmsService;
-
-	@Autowired
-	private OrderRepository orderRepository;
+	private final NoticeRepository noticeRepository;
+	private final JmsService jmsService;
+	private final OrderRepository orderRepository;
 
 	public NoticeResponse getAll(String login) {
 		final var res = noticeRepository.findByToUser(login);

@@ -4,7 +4,6 @@ package sudyar.blps.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.jms.Queue;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import sudyar.blps.entity.Notice;
@@ -14,11 +13,8 @@ import sudyar.blps.etc.Note;
 @RequiredArgsConstructor
 public class JmsService {
 
-	@Autowired
-	private JmsTemplate jmsTemplate;
-
-	@Autowired
-	private Queue queue;
+	private final JmsTemplate jmsTemplate;
+	private final Queue queue;
 
 	public void sendNotice(Notice notice) {
 

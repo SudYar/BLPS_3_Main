@@ -1,7 +1,7 @@
 package sudyar.blps.controller;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -17,19 +17,13 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/executor")
+@RequiredArgsConstructor
 public class ExecutorController {
 
-	@Autowired
-	private OrderService orderService;
-
-	@Autowired
-	private UserService userService;
-
-	@Autowired
-	private NoticeService noticeService;
-
-	@Autowired
-	private FeedbackService feedbackService;
+	private final OrderService orderService;
+	private final UserService userService;
+	private final NoticeService noticeService;
+	private final FeedbackService feedbackService;
 
 	@GetMapping
 	public InfoResponse showInfo() {

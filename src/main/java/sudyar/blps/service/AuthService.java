@@ -1,6 +1,6 @@
 package sudyar.blps.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -19,19 +19,13 @@ import sudyar.blps.security.JwtTokenProvider;
 
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
-	@Autowired
-	AuthenticationManager authenticationManager;
-
-	@Autowired
-	JwtTokenProvider jwtUtils;
-
-	@Autowired
-	UserRepository userRepository;
-
-	@Autowired
-	PasswordEncoder encoder;
+	private final AuthenticationManager authenticationManager;
+	private final JwtTokenProvider jwtUtils;
+	private final UserRepository userRepository;
+	private final PasswordEncoder encoder;
 
 
 	public AuthResponse signIn(AuthUser user) throws BadCredentialsException {
