@@ -22,6 +22,8 @@ import sudyar.blps.security.JwtTokenProvider;
 @RequiredArgsConstructor
 public class AuthService {
 
+	private final String BEARER_START = "Bearer";
+	private final String LOGIN_HAS_TAKEN = "This login is already taken";
 	private final AuthenticationManager authenticationManager;
 	private final JwtTokenProvider jwtUtils;
 	private final UserRepository userRepository;
@@ -36,7 +38,7 @@ public class AuthService {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtils.generateToken(authentication);
 		AuthResponse response = new AuthResponse();
-		response.setJwt("Bearer " + jwt);
+		response.setJwt(BEARER_START + " " + jwt);
 
 		return response;
 	}
@@ -44,7 +46,7 @@ public class AuthService {
 	public ResponseEntity<AuthResponse> signUp(AuthUserWithRole newUser) {
 		final var response = new AuthResponse();
 		if (userRepository.existsByLogin(newUser.getLogin())) {
-			response.setErrorMessage("This login is already taken");
+			response.setErrorMessage(LOGIN_HAS_TAKEN);
 			return ResponseEntity
 					.badRequest()
 					.body(response);
@@ -66,7 +68,7 @@ public class AuthService {
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		final var jwt = jwtUtils.generateToken(authentication);
-		response.setJwt("Bearer " + jwt);
+		response.setJwt(BEARER_START + " "  + jwt);
 
 		return ResponseEntity.ok(response);
 	}

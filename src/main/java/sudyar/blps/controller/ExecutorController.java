@@ -51,24 +51,27 @@ public class ExecutorController {
 			if (noticeService.existByStatusAndOrdering(order, Status.IN_WORK))
 				return new InfoResponse("Данный заказ уже кто-то взял", 1);
 
-			String MESSAGE_READY = "Я готов взяться за заказ";
+			final String MESSAGE_ORDER_HAVE = "Вы взялись за заказ: ";
+			final String MESSAGE_ALREADY_HAVE = "Вы уже и так взялись за заказ: ";
+
+			final String MESSAGE_READY = "Я готов взяться за заказ";
 			String executor = SecurityContextHolder.getContext().getAuthentication().getName();
 			// Костыль с 3 раундами участия в конкурсе
 			if (!noticeService.existChosenOrdering(order.getOwnerLogin(), executor, order, Status.READY)) { // Если ещё не отправлял запрос, что готов выполнять, то отправляем
 				noticeService.createNotice(order.getOwnerLogin(), executor, MESSAGE_READY, order, Status.READY);
-				return new InfoResponse("Вы взялись за заказ: " + order, 0);
+				return new InfoResponse(MESSAGE_ORDER_HAVE + order, 0);
 			} else if (!noticeService.existChosenOrdering(executor, order.getOwnerLogin(), order, Status.START2)) { //Запрос Ready уже был. Если не было старта второго раунда, то пока что ждем
-				return new InfoResponse("Вы уже и так взялись за заказ: " + order, 1);
+				return new InfoResponse(MESSAGE_ALREADY_HAVE + order, 1);
 			} else if (!noticeService.existChosenOrdering(order.getOwnerLogin(), executor, order, Status.READY2)) { // Если ещё не отправлял запрос, что готов выполнять, то отправляем
 				noticeService.createNotice(order.getOwnerLogin(), executor, MESSAGE_READY, order, Status.READY2);
-				return new InfoResponse("Вы взялись за заказ: " + order, 0);
+				return new InfoResponse(MESSAGE_ORDER_HAVE + order, 0);
 			} else if (!noticeService.existChosenOrdering(executor, order.getOwnerLogin(), order, Status.START3)) { //Запрос Ready уже был. Если не было старта второго раунда, то пока что ждем
-				return new InfoResponse("Вы уже и так взялись за заказ: " + order, 1);
+				return new InfoResponse(MESSAGE_ALREADY_HAVE + order, 1);
 			} else if (!noticeService.existChosenOrdering(order.getOwnerLogin(), executor, order, Status.READY3)) { // Если ещё не отправлял запрос, что готов выполнять, то отправляем
 				noticeService.createNotice(order.getOwnerLogin(), executor, MESSAGE_READY, order, Status.READY3);
-				return new InfoResponse("Вы взялись за заказ: " + order, 0);
+				return new InfoResponse(MESSAGE_ORDER_HAVE + order, 0);
 			} else //Запрос Ready уже был. Если не было старта второго раунда, то пока что ждем
-				return new InfoResponse("Вы уже и так взялись за заказ: " + order, 1);
+				return new InfoResponse(MESSAGE_ALREADY_HAVE + order, 1);
 		} else return new InfoResponse("Заказа с id '" + idOrdering + "' нет", 1);
 	}
 
@@ -76,14 +79,16 @@ public class ExecutorController {
 	public InfoResponse finishOrder(@RequestBody int idOrdering) {
 		Optional<Ordering> optionalOrdering = orderService.getById(idOrdering);
 
+		final String SUCCESS = "Заказ выполнен";
+		final String NOT_SUCCESS = "Данный заказ ещё не взят в работу";
 		if (optionalOrdering.isPresent()) {
 			Ordering order = optionalOrdering.get();
 			String executor = SecurityContextHolder.getContext().getAuthentication().getName();
 			if (noticeService.existChosenOrdering(executor, order.getOwnerLogin(), order, Status.IN_WORK)) {
 				noticeService.deleteNotices(order, Status.IN_WORK);
-				noticeService.createNotice(order.getOwnerLogin(), executor, "Заказ выполнен", order, Status.FINISH);
-				return new InfoResponse("Поздравляю, заказ выполнен", 0);
-			} else return new InfoResponse("Данный заказ ещё не взят в работу", 1);
+				noticeService.createNotice(order.getOwnerLogin(), executor, SUCCESS, order, Status.FINISH);
+				return new InfoResponse(SUCCESS, 0);
+			} else return new InfoResponse(NOT_SUCCESS, 1);
 
 		} else return new InfoResponse("Заказа с id '" + idOrdering + "' нет", 1);
 	}

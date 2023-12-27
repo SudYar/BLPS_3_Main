@@ -11,7 +11,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Note implements Serializable {
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 8543217619L;
 	private String to;
 	private String from;
 	private String message;

@@ -10,6 +10,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthResponse implements Serializable {
+
+	private static final long serialVersionUID = 3625187491L;
 	private String jwt;
 	private String errorMessage;
 }

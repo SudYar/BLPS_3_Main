@@ -13,16 +13,19 @@ import sudyar.blps.repo.UserRepository;
 import java.util.Collections;
 
 @Service
+@RequiredArgsConstructor
 public class MyUserDetailsService implements UserDetailsService {
 
-	@Autowired
-	private UserRepository userRepository;
+
+	private final UserRepository userRepository;
+
+	private final String USER_NOT_FOUND = "User not found.";
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		final User user = userRepository
 				.findByLogin(username);
-		if (user == null) throw new UsernameNotFoundException("User not found.");
+		if (user == null) throw new UsernameNotFoundException(USER_NOT_FOUND);
 		final var roleName = user.getRole().name();
 
 		return new org.springframework.security.core.userdetails.User(

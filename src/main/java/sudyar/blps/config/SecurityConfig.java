@@ -1,7 +1,6 @@
 package sudyar.blps.config;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,6 +26,10 @@ import java.util.List;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+	private final String AUTH_URL = "/auth/**";
+	private final String EMPLOYER_URL = "/employer/**";
+	private final String EXECUTOR_URL = "/executor/**";
 
 	private final JwtAuthenticationPoint unauthorizedHandler;
 
@@ -68,11 +71,11 @@ public class SecurityConfig {
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 				.authorizeHttpRequests((auth) -> auth
-						.requestMatchers("/auth/**")
+						.requestMatchers(AUTH_URL)
 						.permitAll()
-						.requestMatchers("/employer/**")
+						.requestMatchers(EMPLOYER_URL)
 						.hasAuthority(Role.EMPLOYER.name())
-						.requestMatchers("/executor/**")
+						.requestMatchers(EXECUTOR_URL)
 						.hasAuthority(Role.EXECUTOR.name())
 						.anyRequest()
 						.permitAll()
